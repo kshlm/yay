@@ -15,6 +15,8 @@ func init() {
 	viper.AddConfigPath("/etc/")
 
 	viper.SetDefault("pacman_bin", "pacman")
+
+	viper.ReadInConfig()
 }
 
 func usage() {
