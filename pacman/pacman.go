@@ -8,6 +8,8 @@ import (
 
 	"github.com/jguer/go-alpm"
 	"github.com/jguer/yay/util"
+
+	"github.com/spf13/viper"
 )
 
 // Query describes a Repository search.
@@ -46,7 +48,7 @@ func readConfig(pacmanconf string) (conf alpm.PacmanConfig, err error) {
 
 // UpdatePackages handles cache update and upgrade
 func UpdatePackages(flags []string) error {
-	args := append([]string{"pacman", "-Syu"}, flags...)
+	args := append([]string{viper.GetString("pacman_bin"), "-Syu"}, flags...)
 
 	cmd := exec.Command("sudo", args...)
 	cmd.Stdin, cmd.Stdout, cmd.Stderr = os.Stdin, os.Stdout, os.Stderr
@@ -306,7 +308,7 @@ func Install(pkgName []string, flags []string) (err error) {
 		return nil
 	}
 
-	args := []string{"pacman", "-S"}
+	args := []string{viper.GetString("pacman_bin"), "-S"}
 	args = append(args, pkgName...)
 	args = append(args, flags...)
 
@@ -322,7 +324,7 @@ func CleanRemove(pkgName []string) (err error) {
 		return nil
 	}
 
-	args := []string{"pacman", "-Rnsc"}
+	args := []string{viper.GetString("pacman_bin"), "-Rnsc"}
 	args = append(args, pkgName...)
 	args = append(args, "--noconfirm")
 

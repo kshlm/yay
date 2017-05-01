@@ -6,7 +6,16 @@ import (
 
 	"github.com/jguer/yay"
 	"github.com/jguer/yay/util"
+
+	"github.com/spf13/viper"
 )
+
+func init() {
+	viper.SetConfigName("yay")
+	viper.AddConfigPath("/etc/")
+
+	viper.SetDefault("pacman_bin", "pacman")
+}
 
 func usage() {
 	fmt.Println(`usage:  yay <operation> [...]
